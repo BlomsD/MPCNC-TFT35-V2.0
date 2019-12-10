@@ -9,16 +9,16 @@ LABEL_ABL,
   {ICON_BLTOUCH_STOW,          LABEL_BLTOUCH_STOW},
   {ICON_BLTOUCH_REPEAT,        LABEL_BLTOUCH_REPEAT},
   {ICON_PROBE_OFFSET,          LABEL_PROBE_OFFSET},
-  {ICON_BLTOUCH,              LABEL_BLTOUCH},
-  {ICON_BLTOUCH_TEST ,        LABEL_BLTOUCH_TEST},
-  {ICON_FAN_FULL_SPEED,       LABEL_FAN_FULL_SPEED},
+  {ICON_BLTOUCH,               LABEL_BLTOUCH},
+  {ICON_BLTOUCH_TEST ,         LABEL_BLTOUCH_TEST},
+  {ICON_FAN_FULL_SPEED,        LABEL_FAN_FULL_SPEED},
   {ICON_BACK,                  LABEL_BACK},}
 };
 
 void menuAutoLeveling(void)
 {
   KEY_VALUES key_num=KEY_IDLE;
-  menuDrawPage(&autoLevelingItems);
+  menuDrawPage(&autoLevelingItems,false);
   while(infoMenu.menu[infoMenu.cur] == menuAutoLeveling)
   {
     key_num = menuKeyGetValue();

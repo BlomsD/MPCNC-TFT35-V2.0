@@ -53,16 +53,16 @@ static void initElements(u8 position)
 
 static float probe_offset_value=0.0;
 
-#define PROBE_OFFSET_MAX_VALUE 5.0f
-#define PROBE_OFFSET_MIN_VALUE -5.0f
+#define PROBE_OFFSET_MAX_VALUE 20.0f
+#define PROBE_OFFSET_MIN_VALUE -20.0f
 
 void showProbeOffset(void)
 {
-  GUI_DispFloat(CENTER_X - 3*BYTE_WIDTH/2, CENTER_Y, probe_offset_value, 1, 2, 1, RIGHT);
+  GUI_DispFloat(CENTER_X - 5*BYTE_WIDTH/2, CENTER_Y, probe_offset_value, 3, 2, RIGHT);
 }
 void probeOffsetReDraw(void)
 {
-  GUI_DispFloat(CENTER_X - 3*BYTE_WIDTH/2, CENTER_Y, probe_offset_value, 1, 2, 1, RIGHT);
+  GUI_DispFloat(CENTER_X - 5*BYTE_WIDTH/2, CENTER_Y, probe_offset_value, 3, 2, RIGHT);
 }
 
 /* Set current offset */
@@ -75,10 +75,9 @@ void setCurrentOffset(float offset)
 void menuProbeOffset(void)
 {
   KEY_VALUES key_num = KEY_IDLE;
-  storeCmd("M851;\n");
   float now = probe_offset_value;
   initElements(KEY_ICON_5);
-  menuDrawPage(&probeOffsetItems);
+  menuDrawPage(&probeOffsetItems,false);
   showProbeOffset();
   while(infoMenu.menu[infoMenu.cur] == menuProbeOffset)
   {

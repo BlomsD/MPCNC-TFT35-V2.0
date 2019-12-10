@@ -25,7 +25,7 @@
     #define EN_CUSTOM               "Custom"
     #define EN_LEVELING             "Job Setup"
     #define EN_POINT_1              "Motor Off"
-    #define EN_POINT_2              "Point 2"
+    #define EN_POINT_2              "Motor Off"
     #define EN_POINT_3              "Point 3"
     #define EN_POINT_4              "Point 4"
     #define EN_ABL                  "Job Setup"
@@ -137,5 +137,10 @@
     #define EN_UNIFIEDHEAT          "Heat/Fan"
     #define EN_COOLDOWN             "Cool Down"
     #define EN_EMERGENCYSTOP        "EM. STOP"
-    
+    #define EN_TOUCH_TO_EXIT        "Touch anywhere to exit"
+	  #define EN_MAINMENU             "Menu"
+    #define EN_WAIT_TEMP_SHUT_DOWN  "Wait for the temperature of hotend to be lower than "STRINGIFY(AUTO_SHUT_DOWN_MAXTEMP)"℃" // Wait for the temperature of hotend to be lower than 50℃
+    #define EN_FORCE_SHUT_DOWN      "Force"
+    #define EN_SHUTTING_DOWN        "Shutting down..."
+
 #endif

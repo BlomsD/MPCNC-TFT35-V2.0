@@ -1,14 +1,44 @@
 #ifndef _CONFIGRATION_H_
 #define _CONFIGRATION_H_
 
+//===========================================================================
+//=========================== Marlin Mode Settings ===========================
+//===========================================================================
+
+/**
+ * Default Marlin Mode Background & Font Color Options
+ *
+ * These colors can be changed in TFT mode, but can also be set here.
+ *
+ * Current color options from lcd.h: BLACK, BLUE, BROWN, BRRED, CYAN, GBLUE, GRAY, GREEN, MAGENTA, RED, WHITE, YELLOW
+ */
+
+// Marlin Mode Background & Font Color Options
+// Current color options from lcd.h: BLACK, BLUE, BROWN, BRRED, CYAN, GBLUE, GRAY, GREEN, MAGENTA, RED, WHITE, YELLOW
+#define ST7920_BKCOLOR BLACK
+#define ST7920_FNCOLOR GREEN
+
+// Text displayed at the top of the LCD in Marlin Mode.
+//#define ST7920_BANNER_TEXT "LCD12864 Simulator"
+
+// Run Marlin Mode fullscreen. Not recommended for TFT24.
+//#define ST7920_FULLSCREEN
+
+//===========================================================================
+//============================ TFT Mode Settings ============================
+//===========================================================================
+
+// Show BTT bootscreen when starting up
+#define SHOW_BTT_BOOTSCREEN
+
 #define TOOL_NUM     1    // set in 1~6
 #define EXTRUDER_NUM 1    // set in 1~6
 #define FAN_NUM      1    // set in 1~6
 
 //                       PLA      PETG       ABS     "CUSTOM1" "CUSTOM2"
-#define PREHEAT_BED      {55,      85,       100,       55,       55}
-#define PREHEAT_HOTEND   {205,     230,      230,       200,      200}
-//#define PREHEAT_TEXT     {"PLA",  "PETG",   "ABS",     "T2:",    "T3:"}
+#define PREHEAT_BED      {60,      70,       100,       55,       55}
+#define PREHEAT_HOTEND   {200,     250,      230,       200,      200}
+#define PREHEAT_TEXT     {"PLA",  "PETG",   "ABS",     "T2:",    "T3:"}
 
 #define HEAT_MAX_TEMP    {150,    275,       275,       275,       275,       275,       275}    //max temperature can be set
 #define HEAT_SIGN_ID     {"B:",   "T0:",     "T1:",     "T2:",     "T3:",     "T4:",     "T5:"}
@@ -20,14 +50,18 @@
 #define EXTRUDER_ID      {"E0",   "E1",      "E2",      "E3",      "E4",      "E5"}
 
 #define FAN_MAX_PWM      {255,       255,       255,       255,       255,       255}
-#define FAN_ID           {"Fan0",    "Fan1",    "Fan2",    "Fan3",    "Fan4",    "Fan5"}
+#define FAN_ID           {"F0",    "F1",    "F2",    "F3",    "F4",    "F5"}
 #define FAN_CMD          {"M106 P0", "M106 P1", "M106 P2", "M106 P3", "M106 P4", "M106 P5" };
 
-#define DEFAULT_SPEED_MOVE      3000 // Move default speed  mm/min
+#define SPEED_ID         {"Sp.", "Fr."}
 
-#define EXTRUDE_SLOW_SPEED      60   // Extrude speed  mm/min
-#define EXTRUDE_NORMAL_SPEED    600  //
-#define EXTRUDE_FAST_SPEED      1200 //
+// Default move speed mm/min
+#define DEFAULT_SPEED_MOVE      3000
+
+// Extrude speed mm/min
+#define EXTRUDE_SLOW_SPEED      60
+#define EXTRUDE_NORMAL_SPEED    600
+#define EXTRUDE_FAST_SPEED      1200
 
 // Size of machine
 #define X_MIN_POS 0
@@ -35,11 +69,11 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS 235
 #define Y_MAX_POS 235
-#define Z_MAX_POS 300
+#define Z_MAX_POS 250
 
-// Specify a Pause position as { X, Y, Z_raise }
+// Specify a pause position as { X, Y, Z_raise }
 #define NOZZLE_PAUSE_RETRACT_LENGTH 15   // (mm)
-#define NOZZLE_PAUSE_PURGE_LENGTH   16   // (mm)
+#define NOZZLE_RESUME_PURGE_LENGTH  16   // (mm)
 #define NOZZLE_PAUSE_X_POSITION     (X_MIN_POS + 10)  // (mm) Must be an integer
 #define NOZZLE_PAUSE_Y_POSITION     (Y_MIN_POS + 10)  // (mm) Must be an integer
 #define NOZZLE_PAUSE_Z_RAISE        20   // (mm)
@@ -47,7 +81,14 @@
 #define NOZZLE_PAUSE_XY_FEEDRATE    6000 // (mm/min) X and Y axes feedrate
 #define NOZZLE_PAUSE_Z_FEEDRATE     600  // (mm/min) Z axis feedrate
 
+// Send G29 for auto bed leveling
 #define AUTO_BED_LEVELING
+#ifdef AUTO_BED_LEVELING
+  // Enable this will send "M500" after "G29" to store leveling value
+  // and send "M420 S1" to enable leveling state after startup
+  #define AUTO_SAVE_LOAD_LEVELING_VALUE
+#endif
+
 // Move to four corner points to Leveling manually (Point 1, Point 2, Point 3, Point 4)
 #define LEVELING_POINT_1_X         (X_MIN_POS + 20)
 #define LEVELING_POINT_1_Y         (Y_MIN_POS + 20)
@@ -62,52 +103,51 @@
 #define LEVELING_POINT_XY_FEEDRATE 6000  // (mm/min) X and Y axes move feedrate
 #define LEVELING_POINT_Z_FEEDRATE  600   // (mm/min) Z axis move feedrate
 
-
 // Power Supply
 #define PS_ON_ACTIVE_HIGH    true   // Set 'false' for ATX (1), 'true' for X-Box (2)
-  
-// Filament run out detect
+
+// Filament runout detection
 #define FIL_RUNOUT_INVERTING true  // Set to false to invert the logic of the sensor.
 #define FIL_NOISE_THRESHOLD  10     // 10*10 = 100ms,  Pause print when filament runout is detected for 100ms.
 
-// Smart filament detecter5
-// This option to use an encoder disc that toggles the runout pin as the filament moves
+// Smart filament runout detection
+// For use with an encoder disc that toggles runout pin as filament moves
 #define FILAMENT_RUNOUT_DISTANCE_MM 7
 
-/* 
-Enable alternative Move Menu Buttons Layout for easy
-update the icons from alternate icon folder
-*/
+// Enable alternative Move Menu Buttons Layout matching the direction of actual printer axis.
+// update the icons from alternate icon folder
 //#define ALTERNATIVE_MOVE_MENU
 
-/* 
-Enable Unified Move Menu
-Move, Home, Extrude, ABL at one Place and bring Gcode Menu and 
-*/
+//Invert the Y Axis move Direction
+//#define INVERT_YAXIS
+
+
+// Enable Unified Move Menu
+// Move, Home, Extrude, ABL at one Place and bring Gcode Menu on Home Menu
 //#define UNIFIED_MENU
 
+//Enable Status Screen
+//----USE ICONS FROM MATERIAL THEME ONLY---//
+//#define STATUS_SCREEN
+
 /**
- * 12864 Mode Background & Font Color Options
- * Current color options from lcd.h: BLACK, BLUE, BROWN, BRRED, CYAN, GBLUE, GRAY, GREEN, MAGENTA, RED, WHITE, YELLOW
+ * Enable gocde files list mode
+ * It is friendly to display long file name, but the model preview feature is not available
+ * Disable this if you want to use the model preview feature
  */
-#define ST7920_BKCOLOR BLACK
-#define ST7920_FNCOLOR GREEN
+//#define GCODE_LIST_MODE
 
-// Show BTT bootscreen when starting up
-#define SHOW_BTT_BOOTSCREEN
 
-// Text displayed at the top of the LCD in 12864 mode. Comment out to disable.
-#define ST7920_BANNER_TEXT "LCD12864 Simulator"
+//-------RESET SETTINGS & TOUCH SCREEN CALIBRATION------||
+//to reset the touch screen create a text file with name 'reset.txt' in root folder of the sd card and press reset button.
 
-// Make the simulator run fullscreen, Not recommended for TFT24.
-//#define ST7920_FULLSCREEN
 
-// Ability to print gcode from Board SD via Gcode functions.
+// SD support
 #define ONBOARD_SD_SUPPORT
 #ifdef ONBOARD_SD_SUPPORT
-  #define M27_AUTOREPORT                      // Disable the M27 polling if you enable enable Marlin AUTO_REPORT_SD_STATUS
-  #define M27_REFRESH                 3       // Time in sec for M27 command 
-  #define M27_WATCH_OTHER_SOURCES    true     // if true the polling on M27 report is always active. Case: SD print start not from TFT35
+  #define M27_AUTOREPORT                      // Disable M27 polling if you enable enable AUTO_REPORT_SD_STATUS in Marlin
+  #define M27_REFRESH                3        // Time in sec for M27 command
+  #define M27_WATCH_OTHER_SOURCES    true     // if true the polling on M27 report is always active. Case: SD print started not from TFT35
 #endif
 
 /**
@@ -116,26 +156,46 @@ Move, Home, Extrude, ABL at one Place and bring Gcode Menu and
  * This function is suitable for Delta Printer.
  */
 //#define HOME_BEFORE_PLR
+//#define BTT_MINI_UPS // Backup power / UPS to move the Z axis steppers on power loss
+#define POWER_LOSS_ZRAISE 10 // (mm) Z axis raise on resume (on power loss with UPS)
 
-// Prevent extrusion if the temperature is below this temperature
+
+// Prevent extrusion if the temperature is below set temperature
 #define PREVENT_COLD_EXTRUSION_MINTEMP 170
 
-  
+/**
+  * Maximum hotend temperature of automatic shut down after printing.
+  * When enable automatic shutdown(Auto Power), when the hotend temperature is higher than this value
+  * turn on the fan to cool down, wait for the hotend temperature to be lower than this value, then turn off the power automatically
+  */
+#define AUTO_SHUT_DOWN_MAXTEMP 50
+
 #define EXTRUDE_STEPS  100.0f
-  
-#define CUSTOM_0_LABEL "Custom0"
-#define CUSTOM_0_GCODE "M105\n"
-#define CUSTOM_1_LABEL "Custom1"
-#define CUSTOM_1_GCODE "M105\n"
-#define CUSTOM_2_LABEL "Custom2"
-#define CUSTOM_2_GCODE "M105\n"
-#define CUSTOM_3_LABEL "Custom3"
-#define CUSTOM_3_GCODE "M105\n"
-#define CUSTOM_4_LABEL "Custom4"
-#define CUSTOM_4_GCODE "M105\n"
-#define CUSTOM_5_LABEL "Custom5"
-#define CUSTOM_5_GCODE "M105\n"
-#define CUSTOM_6_LABEL "Custom6"
-#define CUSTOM_6_GCODE "M105\n"
-  
+
+#define SHOW_FAN_PERCENTAGE // enable to show fan speed as a percentage instead of a value
+
+/**
+ * Support up to 7 custom gcodes, uncomment CUSTOM_X_LABEL and CUSTOM_X_GCODE to enable custom gcode
+ * CUSTOM_X_LABEL is the name of the custom button, CUSTOM_X_GCODE
+ * CUSTOM_X_GCODE is the gcode to be sent by the custom button, end with '\n'
+ * You also need to customize the icon corresponding to the command
+ * Copy your custom icon to the SD card to be updated, such as:"TFT35/bmp/Custom0.bmp", "TFT24/bmp/Custom1.bmp", etc...
+ * The format of the custom icon is as follows
+ * Bit depth: 24 / 32 bit, Pixel size: 95*95(for TFT35), 70*70(for TFT28/TFT24)
+ */
+#define CUSTOM_0_LABEL "Restore EEPROM"
+#define CUSTOM_0_GCODE "M501\n"
+//#define CUSTOM_1_LABEL "Custom2"
+//#define CUSTOM_1_GCODE "M105\n"
+//#define CUSTOM_2_LABEL "Custom2"
+//#define CUSTOM_2_GCODE "M105\n"
+//#define CUSTOM_3_LABEL "Custom3"
+//#define CUSTOM_3_GCODE "M105\n"
+//#define CUSTOM_4_LABEL "Custom4"
+//#define CUSTOM_4_GCODE "M105\n"
+//#define CUSTOM_5_LABEL "Custom5"
+//#define CUSTOM_5_GCODE "M105\n"
+//#define CUSTOM_6_LABEL "Custom6"
+//#define CUSTOM_6_GCODE "M105\n"
+
 #endif

@@ -2,25 +2,21 @@
 #include "includes.h"
 
 REQUEST_COMMAND_INFO requestCommandInfo;
-u32 timeout = 0;
-
-void requestInitTimeOut(void)
-{
-  timeout = OS_GetTime();
-}
-
-bool requestHasTimeOut(void)
-{
-  return ((OS_GetTime() - timeout) > 300);  //3s
-}
 
 static void resetRequestCommandInfo(void) 
 {
+  requestCommandInfo.cmd_rev_buf = malloc(CMD_MAX_REV);
+  while(!requestCommandInfo.cmd_rev_buf); // malloc failed
   memset(requestCommandInfo.cmd_rev_buf,0,CMD_MAX_REV);
   requestCommandInfo.inWaitResponse = true;
   requestCommandInfo.inResponse = false;
   requestCommandInfo.done = false;
   requestCommandInfo.inError = false;
+}
+
+static void clearRequestCommandInfo(void) 
+{
+  free(requestCommandInfo.cmd_rev_buf);
 }
 
 /*
@@ -35,20 +31,20 @@ static void resetRequestCommandInfo(void)
 bool request_M21(void)
 {
   strcpy(requestCommandInfo.command,"M21\n");
-  strcpy(requestCommandInfo.startMagic,"SD card ok");
-  strcpy(requestCommandInfo.stopMagic,"\n");
-  strcpy(requestCommandInfo.errorMagic,"Error");
+  strcpy(requestCommandInfo.startMagic,"SD");
+  strcpy(requestCommandInfo.stopMagic,"card ok");
+  strcpy(requestCommandInfo.errorMagic,"init fail");
 
   resetRequestCommandInfo();
   mustStoreCmd(requestCommandInfo.command);
-  requestInitTimeOut();
   // Wait for response
-  while (!requestCommandInfo.done && !requestHasTimeOut())
+  while (!requestCommandInfo.done)
   {
     loopProcess();
   }
+  clearRequestCommandInfo();
   // Check reponse
-  return !requestHasTimeOut();
+  return !requestCommandInfo.inError;
 }
 
 /*
@@ -73,12 +69,12 @@ char *request_M20(void)
   strcpy(requestCommandInfo.errorMagic,"Error");
   resetRequestCommandInfo();
   mustStoreCmd(requestCommandInfo.command);
-  requestInitTimeOut();
   // Wait for response
-  while (!requestCommandInfo.done && !requestHasTimeOut())
+  while (!requestCommandInfo.done)
   {
     loopProcess();
   }
+  clearRequestCommandInfo();
   return requestCommandInfo.cmd_rev_buf;
 }
 
@@ -100,16 +96,17 @@ long request_M23(char *filename)
   strcpy(requestCommandInfo.errorMagic,"open failed");
   resetRequestCommandInfo();
   mustStoreCmd(requestCommandInfo.command);
-  requestInitTimeOut();
   // Wait for response
-  while (!requestCommandInfo.done && !requestHasTimeOut())
+  while (!requestCommandInfo.done)
   {
     loopProcess();
   }
 
   // Find file size and report its.
   char *ptr;
-  return strtol(strstr(requestCommandInfo.cmd_rev_buf,"Size:")+5, &ptr, 10);
+  long size = strtol(strstr(requestCommandInfo.cmd_rev_buf,"Size:")+5, &ptr, 10);  
+  clearRequestCommandInfo();
+  return size;
 }
 
 /**

@@ -2,7 +2,7 @@
 #include "includes.h"
 
 
-//1��title(����), ITEM_PER_PAGE��item(ͼ��+��ǩ) 
+//1 title, ITEM_PER_PAGE items(icon+label) 
 const MENUITEMS fanItems = {
 //   title
 LABEL_FAN,
@@ -46,7 +46,6 @@ u8 fanGetCurIndex(u8 i)
   return curIndex;
 }
 
-/* �����Ƿ��Ѿ����ͷ��� */
 void fanSetSendWaiting(u8 i, bool isWaiting)
 {
   send_waiting[i] = isWaiting;
@@ -55,14 +54,32 @@ void fanSetSendWaiting(u8 i, bool isWaiting)
 void showFanSpeed(void)
 {
   const GUI_RECT rect = {exhibitRect.x0, CENTER_Y-BYTE_HEIGHT, exhibitRect.x1, CENTER_Y};
+  u8 fs;
+  #ifdef SHOW_FAN_PERCENTAGE
+    fs = (fanSpeed[curIndex]*100)/255;
+  #else
+    fs = fanSpeed[curIndex]
+  #endif 
   GUI_ClearRect(rect.x0, rect.y0, rect.x1, rect.y1);
-  GUI_DispStringInPrect(&rect, (u8*)fanID[curIndex], 1);
-  GUI_DispDec(CENTER_X-BYTE_WIDTH, CENTER_Y, fanSpeed[curIndex], 3, 1, LEFT);
+  GUI_DispStringInPrect(&rect, (u8*)fanID[curIndex]);
+  #ifdef SHOW_FAN_PERCENTAGE
+    char fan_s[5];
+    sprintf(fan_s, "%3d%%", fs); 
+    GUI_DispString(CENTER_X-BYTE_WIDTH, CENTER_Y, (u8 *)fan_s);
+  #else
+    GUI_DispDec(CENTER_X-BYTE_WIDTH, CENTER_Y, fs, 3, LEFT);
+  #endif 
 }
 
 void fanSpeedReDraw(void)
 {
-  GUI_DispDec(CENTER_X-BYTE_WIDTH, CENTER_Y, fanSpeed[curIndex], 3, 1, LEFT);
+  #ifdef SHOW_FAN_PERCENTAGE
+    char fan_s[5] = "";
+    sprintf(fan_s, "%3d%%", (fanSpeed[curIndex]*100)/255); 
+    GUI_DispString(CENTER_X-BYTE_WIDTH, CENTER_Y, (u8 *)fan_s);
+  #else
+    GUI_DispDec(CENTER_X-BYTE_WIDTH, CENTER_Y, fanSpeed[curIndex];, 3, LEFT);
+  #endif   
 }
 
 void menuFan(void)
@@ -72,7 +89,7 @@ void menuFan(void)
   memcpy(nowFanSpeed, fanSpeed, sizeof(fanSpeed));
   KEY_VALUES key_num = KEY_IDLE;	
 
-  menuDrawPage(&fanItems);
+  menuDrawPage(&fanItems,false);
   showFanSpeed();
   while(infoMenu.menu[infoMenu.cur] == menuFan)
   {
@@ -127,3 +144,4 @@ void menuFan(void)
     loopProcess();
   }
 }
+

@@ -66,7 +66,7 @@ u8 calibrationEnsure(u16 x,u16 y)
   if(lcd_x < x+TS_ERR_RANGE && lcd_x>x-TS_ERR_RANGE  && lcd_y > y-TS_ERR_RANGE && lcd_y<y+TS_ERR_RANGE)
   {		
     x_offset=(LCD_WIDTH - GUI_StrPixelWidth(textSelect(LABEL_ADJUST_OK))) >> 1;
-    GUI_DispString(x_offset, LCD_HEIGHT-40, textSelect(LABEL_ADJUST_OK), 1);
+    GUI_DispString(x_offset, LCD_HEIGHT-40, textSelect(LABEL_ADJUST_OK));
     Delay_ms(1000);
   }
   else
@@ -74,9 +74,9 @@ u8 calibrationEnsure(u16 x,u16 y)
     while(isPress());
     GUI_SetColor(RED);
     x_offset=(LCD_WIDTH - GUI_StrPixelWidth(textSelect(LABEL_ADJUST_FAILED))) >> 1;
-    GUI_DispString(x_offset, LCD_HEIGHT-40, textSelect(LABEL_ADJUST_FAILED), 1);
-    GUI_DispDec(0,0,lcd_x,3,0,0);
-    GUI_DispDec(0,20,lcd_y,3,0,0);
+    GUI_DispString(x_offset, LCD_HEIGHT-40, textSelect(LABEL_ADJUST_FAILED));
+    GUI_DispDec(0,0,lcd_x,3,0);
+    GUI_DispDec(0,20,lcd_y,3,0);
     Delay_ms(1000);
     return 0;
   }
@@ -98,9 +98,9 @@ void TSC_Calibration(void)
     GUI_SetColor(BLACK);
     GUI_SetBkColor(WHITE);
     x_offset=(LCD_WIDTH - GUI_StrPixelWidth(textSelect(LABEL_ADJUST_TITLE))) >> 1;
-    GUI_DispString(x_offset, 5, textSelect(LABEL_ADJUST_TITLE), 0);
+    GUI_DispString(x_offset, 5, textSelect(LABEL_ADJUST_TITLE));
     x_offset=(LCD_WIDTH - GUI_StrPixelWidth(textSelect(LABEL_ADJUST_INFO))) >> 1;
-    GUI_DispString(x_offset, 25, textSelect(LABEL_ADJUST_INFO), 0);
+    GUI_DispString(x_offset, 25, textSelect(LABEL_ADJUST_INFO));
     GUI_SetColor(RED);
     for(tp_num = 0;tp_num<3;tp_num++)
     {
@@ -126,8 +126,7 @@ void TSC_Calibration(void)
     F = (Y1*(X3*YL2 - X2*YL3) + Y2*(X1*YL3 - X3*YL1) + Y3*(X2*YL1 - X1*YL2));
   }while(calibrationEnsure(LCD_WIDTH/2, LCD_HEIGHT/2)==0);
 
-  GUI_SetColor(FK_COLOR);
-  GUI_SetBkColor(BK_COLOR);
+  GUI_RestoreColorDefault();
 }
 
 
@@ -142,7 +141,7 @@ u16 Key_value(u8 total_rect,const GUI_RECT* menuRect)
     if((x>menuRect[i].x0)&&(x<menuRect[i].x1)&&(y>menuRect[i].y0)&&(y<menuRect[i].y1))
     {
       #ifdef BUZZER_PIN
-			openBuzzer(3, 11);
+        openBuzzer(3, 11);
       #endif
       return i;
     }
@@ -177,7 +176,7 @@ u8 isPress(void)
 }
 
 
-void (*TSC_ReDrawIcon)(u8 positon, u8 is_press);
+void (*TSC_ReDrawIcon)(u8 positon, u8 is_press) = NULL;
 
 u16 KEY_GetValue(u8 total_rect,const GUI_RECT* menuRect)
 {
@@ -192,16 +191,16 @@ u16 KEY_GetValue(u8 total_rect,const GUI_RECT* menuRect)
     {
       key_num = Key_value(total_rect, menuRect);
       firstPress = false;
-      if(TGCODE==0 && MODEselect ==0)
-      TSC_ReDrawIcon(key_num, 1);
+      if(TSC_ReDrawIcon)
+        TSC_ReDrawIcon(key_num, 1);
     }
   }
   else
   {
     if (firstPress == false )
     {
-      if(TGCODE==0 && MODEselect ==0)
-      TSC_ReDrawIcon(key_num, 0);
+      if(TSC_ReDrawIcon)
+        TSC_ReDrawIcon(key_num, 0);
       key_return = key_num;
       key_num = IDLE_TOUCH;
       firstPress = true;
