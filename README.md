@@ -23,8 +23,12 @@ Troubleshooting:
 * If it isn't updating your firmware there is a decent chance your bootloader is wrong (mine was). You'll need the <a href="https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/TFT35_V2%20Bootloader%20fix">bootloader</a> and slink utility. See this <a href="https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/issues/24#issuecomment-550535410">post for more information</a>.
 
 Changelog:
+* 11JAN2020 - V1.1.1 - Disabled auto bed leveling in configuration.h since it was giving a "M420 S1 unknown command" at startup
 * 10DEC2019 - V1.1 - Updated to BigTreeTech Firmware V2.0.25 and added a button to the main screen to disable the Z strepper motor as well. Updated the printing screen to try and switch the stop to a back button upon completion.
 * 12NOV2019 - V1.0 - Initial commit. Based on BigTreeTech firmware V2.0.24.2
+
+Known issues:
+* M00 command causes issues where the user can't just confirm it.
 
 Example:
 <img src="https://imghst.gpsfiledepot.com/1573595052.jpg" width="400">
