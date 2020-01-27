@@ -200,6 +200,10 @@ void parseACK(void)
     {
       busyIndicator(STATUS_BUSY);
     }
+    else if(ack_seen(echomagic) && ack_seen(busymagic) && ack_seen("paused for user"))
+    {
+      goto parse_end;
+    }
 #ifdef ONBOARD_SD_SUPPORT     
     else if(ack_seen(bsdnoprintingmagic) && infoMenu.menu[infoMenu.cur] == menuPrinting)
     {

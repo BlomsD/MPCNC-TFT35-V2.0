@@ -185,6 +185,7 @@ const char *const en_pack[LABEL_NUM]={
   EN_WAIT_TEMP_SHUT_DOWN,
   EN_FORCE_SHUT_DOWN,
   EN_SHUTTING_DOWN,
+  EN_M0_PAUSE,
 };
 
 const char *const cn_pack[LABEL_NUM]={
@@ -336,6 +337,7 @@ const char *const cn_pack[LABEL_NUM]={
   CN_WAIT_TEMP_SHUT_DOWN,
   CN_FORCE_SHUT_DOWN,
   CN_SHUTTING_DOWN,
+  CN_M0_PAUSE,
 };
 
 const char *const ru_pack[LABEL_NUM]={
@@ -487,6 +489,7 @@ const char *const ru_pack[LABEL_NUM]={
   RU_WAIT_TEMP_SHUT_DOWN,
   RU_FORCE_SHUT_DOWN,
   RU_SHUTTING_DOWN,
+  RU_M0_PAUSE,
 };
 
 const char *const jp_pack[LABEL_NUM]={
@@ -638,6 +641,7 @@ const char *const jp_pack[LABEL_NUM]={
   JP_WAIT_TEMP_SHUT_DOWN,
   JP_FORCE_SHUT_DOWN,
   JP_SHUTTING_DOWN,
+  JP_M0_PAUSE,
 };
 
 const char *const am_pack[LABEL_NUM]={
@@ -789,6 +793,7 @@ const char *const am_pack[LABEL_NUM]={
   AM_WAIT_TEMP_SHUT_DOWN,
   AM_FORCE_SHUT_DOWN,
   AM_SHUTTING_DOWN,
+  AM_M0_PAUSE,
 };
 
 const char *const de_pack[LABEL_NUM]={
@@ -940,6 +945,7 @@ const char *const de_pack[LABEL_NUM]={
   DE_WAIT_TEMP_SHUT_DOWN,
   DE_FORCE_SHUT_DOWN,
   DE_SHUTTING_DOWN,
+  DE_M0_PAUSE,
 };
 
 const char *const cz_pack[LABEL_NUM]={
@@ -1091,6 +1097,7 @@ const char *const cz_pack[LABEL_NUM]={
   CZ_WAIT_TEMP_SHUT_DOWN,
   CZ_FORCE_SHUT_DOWN,
   CZ_SHUTTING_DOWN,
+  CZ_M0_PAUSE,
 };
 
 const char *const es_pack[LABEL_NUM]={
@@ -1242,6 +1249,7 @@ const char *const es_pack[LABEL_NUM]={
   ES_WAIT_TEMP_SHUT_DOWN,
   ES_FORCE_SHUT_DOWN,
   ES_SHUTTING_DOWN,
+  ES_M0_PAUSE,
 };
 
 const char *const fr_pack[LABEL_NUM]={
@@ -1393,6 +1401,7 @@ const char *const fr_pack[LABEL_NUM]={
   FR_WAIT_TEMP_SHUT_DOWN,
   FR_FORCE_SHUT_DOWN,
   FR_SHUTTING_DOWN,
+  FR_M0_PAUSE,
 };
 
 const char *const pt_pack[LABEL_NUM]={
@@ -1544,6 +1553,7 @@ const char *const pt_pack[LABEL_NUM]={
   PT_WAIT_TEMP_SHUT_DOWN,
   PT_FORCE_SHUT_DOWN,
   PT_SHUTTING_DOWN,
+  PT_M0_PAUSE,
 };
 
 const char *const it_pack[LABEL_NUM]={
@@ -1695,6 +1705,7 @@ const char *const it_pack[LABEL_NUM]={
   IT_WAIT_TEMP_SHUT_DOWN,
   IT_FORCE_SHUT_DOWN,
   IT_SHUTTING_DOWN,
+  IT_M0_PAUSE,
 };
 
 const char *const pl_pack[LABEL_NUM]={
@@ -1846,6 +1857,7 @@ const char *const pl_pack[LABEL_NUM]={
   PL_WAIT_TEMP_SHUT_DOWN,
   PL_FORCE_SHUT_DOWN,
   PL_SHUTTING_DOWN,
+  PL_M0_PAUSE,
 };
 
 const char *const sk_pack[LABEL_NUM]={
@@ -1997,6 +2009,7 @@ const char *const sk_pack[LABEL_NUM]={
   SK_WAIT_TEMP_SHUT_DOWN,
   SK_FORCE_SHUT_DOWN,
   SK_SHUTTING_DOWN,
+  SK_M0_PAUSE,
 };
 
 u8 * textSelect(u8 sel)

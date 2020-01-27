@@ -177,6 +177,7 @@ enum
   
   LABEL_NUM,
   LABEL_BACKGROUND,
+  LABEL_M0_PAUSE,
 };
 
 u8 * textSelect(u8 sel);

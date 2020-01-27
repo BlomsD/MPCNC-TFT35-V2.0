@@ -143,5 +143,5 @@
     #define SK_WAIT_TEMP_SHUT_DOWN  "Počkať na teplotu trysky menej ako"STRINGIFY(AUTO_SHUT_DOWN_MAXTEMP)"℃" // Wait for the temperature of hotend to be lower than 50℃
     #define SK_FORCE_SHUT_DOWN      "Vynútené vypnutie"
     #define SK_SHUTTING_DOWN        "Vypínanie..."
-
+    #define SK_M0_PAUSE             "Paused by M0 command"
 #endif
