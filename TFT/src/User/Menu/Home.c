@@ -28,7 +28,8 @@ void menuHome(void)
       case KEY_ICON_0: storeCmd("G28\n");   break;
       case KEY_ICON_1: storeCmd("G28 X\n"); break;
       case KEY_ICON_2: storeCmd("G28 Y\n"); break;
-      case KEY_ICON_3: storeCmd("G28 Z\n"); break;
+      case KEY_ICON_3: storeCmd("G28 Z\n"); break;  //use this one for manual Z touch plate adjustment
+      //case KEY_ICON_3: storeCmd("G28 Z\n G92 Z8.94\n G00 Z10 F300\n"); break; //set the numbers after G92 Z to your touch plate height
       case KEY_ICON_7: infoMenu.cur--;      break;
       default:break;            
     }
