@@ -23,6 +23,7 @@ Troubleshooting:
 * If it isn't updating your firmware there is a decent chance your bootloader is wrong (mine was). You'll need the <a href="https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/tree/master/TFT35_V2%20Bootloader%20fix">bootloader</a> and slink utility. See this <a href="https://github.com/bigtreetech/BIGTREETECH-TouchScreenFirmware/issues/24#issuecomment-550535410">post for more information</a>.
 
 Changelog:
+* 6JUN2020 - V1.1.3 - Fixed a bug where compiles firmware wasn't updated to V1.1.2. Also added a line in Home.c to allow you to program a Z touch plate offset interanlly. This also allows you to have the router lift further off the plate after homing. Check it out on line 32 (uncomment line 32 to enable and comment (//) line 31). The enable you will have to build the firmware in VSCode. See the main Marlin page for directions.
 * 26JAN2020 - V1.1.2 - Enabled M0/M1 command when printing from the SD card on the TFT screen.
 * 11JAN2020 - V1.1.1 - Disabled auto bed leveling in configuration.h since it was giving a "M420 S1 unknown command" at startup
 * 10DEC2019 - V1.1 - Updated to BigTreeTech Firmware V2.0.25 and added a button to the main screen to disable the Z stepper motor as well. Updated the printing screen to try and switch the stop to a back button upon completion.
